@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id               String      @id @default(cuid())
+  email            String      @unique
+  name             String?
+  password         String?
+  emailVerified    DateTime?
+  verifyToken      String?     @unique
+  resetToken       String?     @unique
+  resetTokenExpiry DateTime?
+  image            String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  tasks            Task[]
+  tags             Tag[]
+  savedViews       SavedView[]
+  accounts         Account[]
+  sessions         Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Task {
+  id            String        @id @default(cuid())
+  title         String
+  description   String?       @db.Text
+  status        TaskStatus    @default(TODO)
+  priority      Priority      @default(MEDIUM)
+  dueDate       DateTime?
+  completedAt   DateTime?
+  isRecurring   Boolean       @default(false)
+  recurringRule String?
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags          TagsOnTasks[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Tag {
+  id     String        @id @default(cuid())
+  name   String
+  color  String        @default("#7C5CFF")
+  userId String
+  user   User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tasks  TagsOnTasks[]
+
+  @@unique([name, userId])
+}
+
+model TagsOnTasks {
+  taskId String
+  tagId  String
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([taskId, tagId])
+}
+
+model SavedView {
+  id        String   @id @default(cuid())
+  name      String
+  icon      String?
+  filters   Json
+  sortBy    String   @default("createdAt")
+  sortOrder String   @default("desc")
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
