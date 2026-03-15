@@ -22,6 +22,13 @@ interface TaskCardProps {
   compact?: boolean;
 }
 
+const PRIORITY_STRIPE: Record<string, string> = {
+  URGENT: "bg-[#F43F5E]",
+  HIGH:   "bg-[#F59E0B]",
+  MEDIUM: "bg-[#7C5CFF]",
+  LOW:    "bg-[#52525B]",
+};
+
 export function TaskCard({
   task,
   onToggleComplete,
@@ -41,32 +48,47 @@ export function TaskCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "group flex items-start gap-3 px-4 py-3 border-b border-[#1E1E25]",
-        "hover:bg-white/[0.02] transition-all duration-150 cursor-pointer",
-        selected && "bg-[#7C5CFF]/8 border-b-[#7C5CFF]/20",
-        isDone && "opacity-60"
+        "group relative flex items-start gap-3 pl-4 pr-4 py-3",
+        "border-b border-[#1E1E25]/80 transition-all duration-150 cursor-pointer",
+        // Hover: subtle surface lift
+        "hover:bg-[#16161D]",
+        // Selected state
+        selected && "bg-[#7C5CFF]/[0.06] border-b-[#7C5CFF]/15",
+        // Done: muted
+        isDone && "opacity-55"
       )}
       onClick={() => onEdit(task)}
     >
-      {/* Select checkbox */}
-      {onSelect && (
-        <input
-          type="checkbox"
-          checked={selected}
-          onChange={(e) => { e.stopPropagation(); onSelect(task.id, e.target.checked); }}
-          onClick={(e) => e.stopPropagation()}
+      {/* Priority accent stripe — left edge */}
+      {!isDone && (
+        <span
           className={cn(
-            "w-3.5 h-3.5 rounded border border-[#2A2A35] bg-transparent",
-            "checked:bg-[#7C5CFF] checked:border-[#7C5CFF] cursor-pointer",
-            "transition-all duration-150 shrink-0 mt-0.5",
-            "opacity-0 group-hover:opacity-100",
-            selected && "opacity-100"
+            "absolute left-0 top-[20%] bottom-[20%] w-[2px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200",
+            PRIORITY_STRIPE[task.priority] ?? "bg-[#52525B]"
           )}
         />
       )}
 
-      {/* Status checkbox */}
-      <div onClick={(e) => e.stopPropagation()}>
+      {/* Bulk select */}
+      {onSelect && (
+        <div className="flex items-center mt-0.5 shrink-0">
+          <input
+            type="checkbox"
+            checked={selected}
+            onChange={(e) => { e.stopPropagation(); onSelect(task.id, e.target.checked); }}
+            onClick={(e) => e.stopPropagation()}
+            className={cn(
+              "w-3.5 h-3.5 rounded-sm border border-[#2A2A35] bg-transparent accent-[#7C5CFF] cursor-pointer",
+              "transition-all duration-150",
+              "opacity-0 group-hover:opacity-60",
+              selected && "opacity-100"
+            )}
+          />
+        </div>
+      )}
+
+      {/* Completion checkbox */}
+      <div onClick={(e) => e.stopPropagation()} className="mt-0.5 shrink-0">
         <TaskCheckbox
           checked={isDone}
           onChange={(checked) => onToggleComplete(task.id, checked)}
@@ -74,67 +96,76 @@ export function TaskCard({
         />
       </div>
 
-      {/* Content */}
+      {/* Main content */}
       <div className="flex-1 min-w-0">
-        <div className="flex items-start gap-2">
-          <span className={cn(
-            "text-sm font-medium leading-tight flex-1 min-w-0 break-words",
-            isDone ? "task-done-text text-[#52525B]" : "text-[#F4F4F5]"
-          )}>
-            {task.title}
-          </span>
-        </div>
+        <p className={cn(
+          "text-sm font-medium leading-snug break-words",
+          isDone
+            ? "task-done-text text-[#3A3A45]"
+            : "text-[#F4F4F5] group-hover:text-white transition-colors duration-100"
+        )}>
+          {task.title}
+        </p>
 
         {!compact && task.description && (
-          <p className="text-xs text-[#52525B] mt-1 line-clamp-1">{task.description}</p>
+          <p className="text-[11.5px] text-[#52525B] mt-0.5 line-clamp-1 leading-relaxed">
+            {task.description}
+          </p>
         )}
 
-        {/* Meta row */}
-        <div className="flex items-center gap-2 mt-2 flex-wrap">
-          {/* Priority */}
-          <PriorityIcon priority={task.priority} />
+        {/* Meta strip */}
+        {(!compact || task.dueDate || task.isRecurring || tags.length > 0) && (
+          <div className="flex items-center gap-2.5 mt-1.5 flex-wrap">
+            <PriorityIcon priority={task.priority} />
 
-          {/* Due date */}
-          {task.dueDate && (
-            <span className={cn(
-              "inline-flex items-center gap-1 text-[11px] font-medium",
-              overdue ? "text-[#F43F5E]" : "text-[#52525B]"
-            )}>
-              <Calendar className="h-3 w-3" />
-              {formatDate(task.dueDate)}
-            </span>
-          )}
+            {task.dueDate && (
+              <span className={cn(
+                "inline-flex items-center gap-1 text-[11px] font-medium tracking-tight",
+                overdue
+                  ? "text-[#F43F5E]"
+                  : "text-[#52525B] group-hover:text-[#6B6B7A] transition-colors"
+              )}>
+                <Calendar className="h-3 w-3" />
+                {formatDate(task.dueDate)}
+              </span>
+            )}
 
-          {/* Recurring */}
-          {task.isRecurring && (
-            <Repeat className="h-3 w-3 text-[#52525B]" />
-          )}
+            {task.isRecurring && (
+              <Repeat className="h-3 w-3 text-[#52525B]" />
+            )}
 
-          {/* Tags */}
-          {tags.map((tag) => (
-            <TagBadge key={tag.id} tag={tag} size="xs" />
-          ))}
-        </div>
+            {tags.slice(0, 3).map((tag) => (
+              <TagBadge key={tag.id} tag={tag} size="xs" />
+            ))}
+            {tags.length > 3 && (
+              <span className="text-[10px] text-[#52525B]">+{tags.length - 3}</span>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Actions */}
+      {/* Hover actions */}
       <div
         className={cn(
-          "flex items-center gap-1 transition-opacity duration-150",
-          isHovered ? "opacity-100" : "opacity-0"
+          "flex items-center gap-0.5 self-start mt-0.5 transition-all duration-150",
+          isHovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-1"
         )}
         onClick={(e) => e.stopPropagation()}
       >
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center justify-center w-7 h-7 rounded-lg text-[#52525B] hover:text-[#A1A1AA] hover:bg-white/5 transition-all duration-150">
+            <button className={cn(
+              "flex items-center justify-center w-6 h-6 rounded-md",
+              "text-[#52525B] hover:text-[#A1A1AA] hover:bg-white/[0.06]",
+              "transition-all duration-100"
+            )}>
               <MoreHorizontal className="h-3.5 w-3.5" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => onEdit(task)}>
               <Edit2 className="h-3.5 w-3.5" />
-              Edit task
+              Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem destructive onClick={() => onDelete(task.id)}>

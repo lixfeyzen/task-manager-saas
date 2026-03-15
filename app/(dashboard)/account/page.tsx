@@ -131,13 +131,16 @@ export default function AccountPage() {
       {/* Profile */}
       <SectionCard icon={<User className="h-4 w-4" />} title="Profile" description="Update your display name and email">
         <div className="flex items-center gap-4 py-1">
-          <Avatar className="h-14 w-14">
-            <AvatarImage src={session?.user?.image ?? undefined} />
-            <AvatarFallback className="text-base">{initials}</AvatarFallback>
-          </Avatar>
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#7C5CFF]/40 to-[#22D3EE]/20 blur-sm scale-110" />
+            <Avatar className="relative h-14 w-14 ring-2 ring-[#7C5CFF]/20 ring-offset-2 ring-offset-[#111116]">
+              <AvatarImage src={session?.user?.image ?? undefined} />
+              <AvatarFallback className="text-base">{initials}</AvatarFallback>
+            </Avatar>
+          </div>
           <div>
-            <p className="text-sm font-medium text-[#F4F4F5]">{session?.user?.name ?? "No name set"}</p>
-            <p className="text-xs text-[#52525B]">{session?.user?.email}</p>
+            <p className="text-sm font-semibold text-[#F4F4F5]">{session?.user?.name ?? "No name set"}</p>
+            <p className="text-xs text-[#52525B] mt-0.5">{session?.user?.email}</p>
           </div>
         </div>
 

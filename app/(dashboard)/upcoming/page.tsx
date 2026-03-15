@@ -118,28 +118,31 @@ export default function UpcomingPage() {
 
           return (
             <div key={day.toISOString()}>
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center gap-2.5 mb-2">
                 <span className={cn(
-                  "text-xs font-semibold uppercase tracking-wider",
-                  isToday ? "text-[#F59E0B]" : "text-[#52525B]"
+                  "text-[11px] font-semibold uppercase tracking-widest",
+                  isToday ? "text-[#F59E0B]" : "text-[#3A3A45]"
                 )}>
                   {label}
                 </span>
                 <span className={cn(
-                  "text-[11px] font-medium px-1.5 py-0.5 rounded-full",
-                  isToday ? "bg-[#F59E0B]/15 text-[#F59E0B]" : "bg-[#1E1E25] text-[#52525B]"
+                  "text-[10px] font-semibold tabular-nums px-1.5 py-0.5 rounded-full",
+                  isToday ? "bg-[#F59E0B]/12 text-[#F59E0B]" : "bg-[#1E1E25] text-[#52525B]"
                 )}>
                   {dayTasks.length}
                 </span>
-                <div className="flex-1 h-px bg-[#1E1E25]" />
+                <div className={cn("flex-1 h-px", isToday ? "bg-[#F59E0B]/15" : "bg-[#1E1E25]")} />
                 <button
                   onClick={() => { setSelectedDate(day); setEditTask(null); setFormOpen(true); }}
-                  className="text-[#52525B] hover:text-[#A1A1AA] transition-colors"
+                  className="text-[#3A3A45] hover:text-[#71717A] transition-colors duration-150"
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </button>
               </div>
-              <div className="bg-[#111116] border border-[#1E1E25] rounded-xl overflow-hidden">
+              <div className={cn(
+                "border rounded-xl overflow-hidden",
+                isToday ? "bg-[#111116] border-[#F59E0B]/10" : "bg-[#111116] border-[#1E1E25]"
+              )}>
                 {dayTasks.map((task) => (
                   <TaskCard
                     key={task.id}

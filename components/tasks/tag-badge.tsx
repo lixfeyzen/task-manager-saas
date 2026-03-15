@@ -33,16 +33,16 @@ export function TagBadge({ tag, onRemove, size = "sm", className }: TagBadgeProp
       }}
     >
       <span
-        className="w-1.5 h-1.5 rounded-full shrink-0"
+        className={cn("rounded-full shrink-0", size === "xs" ? "w-1 h-1" : "w-1.5 h-1.5")}
         style={{ backgroundColor: hex }}
       />
       {tag.name}
       {onRemove && (
         <button
           onClick={(e) => { e.stopPropagation(); onRemove(); }}
-          className="ml-0.5 rounded-full hover:bg-black/20 p-0.5 transition-colors"
+          className="ml-0.5 -mr-0.5 rounded-full hover:bg-black/25 p-0.5 transition-colors duration-100 opacity-70 hover:opacity-100"
         >
-          <X className="h-2.5 w-2.5" />
+          <X className="h-2 w-2" />
         </button>
       )}
     </span>

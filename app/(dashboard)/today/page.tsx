@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { format } from "date-fns";
 import { Star, Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { TaskList } from "@/components/tasks/task-list";
 import { TaskForm } from "@/components/tasks/task-form";
@@ -102,15 +103,35 @@ export default function TodayPage() {
 
         {/* Progress bar */}
         {tasks.length > 0 && (
-          <div className="mt-4">
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[11px] text-[#52525B]">{completed} of {tasks.length} completed</span>
-              <span className="text-[11px] text-[#52525B]">{Math.round(progress)}%</span>
+          <div className="mt-4 space-y-1.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-[#52525B]">
+                {progress >= 100
+                  ? <span className="text-[#22C55E] font-medium">All done! 🎉</span>
+                  : <>{completed} of {tasks.length} completed</>
+                }
+              </span>
+              <span className={cn(
+                "text-[11px] font-semibold tabular-nums",
+                progress >= 100 ? "text-[#22C55E]" : progress > 0 ? "text-[#A1A1AA]" : "text-[#52525B]"
+              )}>
+                {Math.round(progress)}%
+              </span>
             </div>
             <div className="h-1 bg-[#1E1E25] rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-[#7C5CFF] to-[#22D3EE] rounded-full transition-all duration-500"
-                style={{ width: `${progress}%` }}
+                className="h-full rounded-full transition-all duration-700 ease-out"
+                style={{
+                  width: `${progress}%`,
+                  background: progress >= 100
+                    ? "linear-gradient(to right, #22C55E, #4ADE80)"
+                    : "linear-gradient(to right, #7C5CFF, #22D3EE)",
+                  boxShadow: progress > 0
+                    ? progress >= 100
+                      ? "0 0 8px rgba(34,197,94,0.5)"
+                      : "0 0 8px rgba(124,92,255,0.4)"
+                    : "none",
+                }}
               />
             </div>
           </div>

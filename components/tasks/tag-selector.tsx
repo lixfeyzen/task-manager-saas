@@ -83,7 +83,7 @@ export function TagSelector({ allTags, selectedIds, onChange, onClose, onCreateT
       {/* Tags list */}
       <div className="p-1 max-h-48 overflow-y-auto">
         {filtered.length === 0 && !showCreate && (
-          <p className="text-xs text-[#52525B] px-3 py-2 italic">No labels found</p>
+          <p className="text-[11px] text-[#3A3A45] px-3 py-3 text-center">No labels found</p>
         )}
         {filtered.map((tag) => {
           const selected = selectedIds.includes(tag.id);
@@ -96,9 +96,11 @@ export function TagSelector({ allTags, selectedIds, onChange, onClose, onCreateT
               type="button"
               onClick={() => toggle(tag.id)}
               className={cn(
-                "w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-sm",
-                "hover:bg-white/5 transition-colors duration-100",
-                selected ? "text-[#F4F4F5]" : "text-[#A1A1AA]"
+                "w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[12px]",
+                "transition-colors duration-100",
+                selected
+                  ? "bg-[#7C5CFF]/8 text-[#F4F4F5]"
+                  : "text-[#A1A1AA] hover:bg-white/5 hover:text-[#F4F4F5]"
               )}
             >
               <span

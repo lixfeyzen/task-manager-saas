@@ -4,13 +4,10 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Calendar, Repeat, Tag, X, ChevronDown } from "lucide-react";
+import { Calendar, Repeat, Tag, X } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 import { TagBadge } from "./tag-badge";
 import { TagSelector } from "./tag-selector";
 import {
@@ -19,9 +16,6 @@ import {
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
-} from "@/components/ui/dropdown";
 import type { TaskWithTags } from "@/types";
 import type { Tag as TagType } from "@/app/generated/prisma/client";
 
@@ -54,9 +48,9 @@ const PRIORITY_OPTIONS = [
 ];
 
 const STATUS_OPTIONS = [
-  { value: "TODO",        label: "Todo" },
-  { value: "IN_PROGRESS", label: "In Progress" },
-  { value: "DONE",        label: "Done" },
+  { value: "TODO",        label: "Todo",        dot: "#52525B" },
+  { value: "IN_PROGRESS", label: "In Progress", dot: "#22D3EE" },
+  { value: "DONE",        label: "Done",        dot: "#22C55E" },
 ];
 
 const RECURRING_OPTIONS = [
@@ -108,6 +102,7 @@ export function TaskForm({ open, onClose, onSubmit, initialTask, allTags, defaul
       });
       setSelectedTagIds([]);
     }
+    setShowTagSelector(false);
   }, [initialTask, open, reset, defaultDueDate]);
 
   const handleFormSubmit = async (data: FormData) => {
@@ -122,48 +117,63 @@ export function TaskForm({ open, onClose, onSubmit, initialTask, allTags, defaul
 
   const selectedTags = allTags.filter((t) => selectedTagIds.includes(t.id));
   const priority = watch("priority");
+  const status = watch("status");
   const priorityOption = PRIORITY_OPTIONS.find((p) => p.value === priority);
+  const statusOption = STATUS_OPTIONS.find((s) => s.value === status);
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-xl">
-        <DialogHeader>
-          <DialogTitle>{initialTask ? "Edit task" : "New task"}</DialogTitle>
-        </DialogHeader>
+      <DialogContent className="max-w-lg p-0 gap-0 overflow-hidden">
+        {/* Header */}
+        <div className="px-5 pt-5 pb-0">
+          <div className="flex items-center gap-2 mb-0.5">
+            {/* Status dot indicator */}
+            <span
+              className="w-2 h-2 rounded-full shrink-0 ring-2 ring-offset-2 ring-offset-[#111116] transition-colors duration-200"
+              style={{ backgroundColor: statusOption?.dot ?? "#52525B" }}
+            />
+            <span className="text-[11px] font-medium text-[#52525B] uppercase tracking-widest">
+              {initialTask ? "Edit task" : "New task"}
+            </span>
+          </div>
+        </div>
 
         <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <div className="p-5 space-y-4">
-            {/* Title */}
+          {/* Body */}
+          <div className="px-5 py-4 space-y-3">
+            {/* Title — large, no border */}
             <div>
               <input
                 {...register("title")}
-                placeholder="Task title…"
+                placeholder="What needs to be done?"
+                autoFocus
                 className={cn(
-                  "w-full bg-transparent border-none outline-none text-[#F4F4F5]",
-                  "text-lg font-semibold placeholder:text-[#2A2A35] focus:placeholder:text-[#3A3A45]",
+                  "w-full bg-transparent border-none outline-none",
+                  "text-[#F4F4F5] text-lg font-semibold leading-snug",
+                  "placeholder:text-[#282830] focus:placeholder:text-[#3A3A45]",
                   "transition-colors duration-150"
                 )}
-                autoFocus
               />
               {errors.title && (
-                <p className="text-xs text-[#F43F5E] mt-1">{errors.title.message}</p>
+                <p className="text-[11px] text-[#F43F5E] mt-1">{errors.title.message}</p>
               )}
             </div>
 
             {/* Description */}
             <textarea
               {...register("description")}
-              placeholder="Add a description…"
+              placeholder="Add notes, links, or context…"
               rows={3}
               className={cn(
-                "w-full bg-transparent border-none outline-none text-sm text-[#A1A1AA]",
-                "placeholder:text-[#2A2A35] focus:placeholder:text-[#3A3A45] resize-none",
-                "transition-colors duration-150 leading-relaxed"
+                "w-full bg-transparent border-none outline-none",
+                "text-sm text-[#A1A1AA] leading-relaxed resize-none",
+                "placeholder:text-[#282830] focus:placeholder:text-[#3A3A45]",
+                "transition-colors duration-150"
               )}
             />
 
-            {/* Tags */}
-            <div className="flex flex-wrap gap-1.5 items-center">
+            {/* Tags row */}
+            <div className="flex flex-wrap gap-1.5 items-center min-h-[26px]">
               {selectedTags.map((tag) => (
                 <TagBadge
                   key={tag.id}
@@ -174,113 +184,140 @@ export function TaskForm({ open, onClose, onSubmit, initialTask, allTags, defaul
               <button
                 type="button"
                 onClick={() => setShowTagSelector(!showTagSelector)}
-                className="inline-flex items-center gap-1 text-xs text-[#52525B] hover:text-[#A1A1AA] px-2 py-1 rounded-full border border-dashed border-[#1E1E25] hover:border-[#2A2A35] transition-all duration-150"
+                className={cn(
+                  "inline-flex items-center gap-1 text-[11px] font-medium",
+                  "px-2 py-0.5 rounded-full border transition-all duration-150",
+                  showTagSelector
+                    ? "border-[#7C5CFF]/40 bg-[#7C5CFF]/8 text-[#7C5CFF]"
+                    : "border-dashed border-[#1E1E25] text-[#52525B] hover:border-[#2A2A35] hover:text-[#A1A1AA]"
+                )}
               >
-                <Tag className="h-3 w-3" />
-                Add label
+                <Tag className="h-2.5 w-2.5" />
+                {selectedTagIds.length === 0 ? "Add label" : "Labels"}
               </button>
             </div>
 
             {showTagSelector && (
-              <TagSelector
-                allTags={allTags}
-                selectedIds={selectedTagIds}
-                onChange={setSelectedTagIds}
-                onClose={() => setShowTagSelector(false)}
-              />
-            )}
-
-            {/* Meta row */}
-            <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-[#1E1E25]">
-              {/* Status */}
-              <Select
-                value={watch("status")}
-                onValueChange={(v) => setValue("status", v as FormData["status"])}
-              >
-                <SelectTrigger className="h-8 w-auto text-xs border-[#1E1E25] bg-transparent px-2.5">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {STATUS_OPTIONS.map((s) => (
-                    <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              {/* Priority */}
-              <Select
-                value={priority}
-                onValueChange={(v) => setValue("priority", v as FormData["priority"])}
-              >
-                <SelectTrigger className="h-8 w-auto text-xs border-[#1E1E25] bg-transparent px-2.5">
-                  <span style={{ color: priorityOption?.color }} className="font-medium">
-                    {priorityOption?.label}
-                  </span>
-                </SelectTrigger>
-                <SelectContent>
-                  {PRIORITY_OPTIONS.map((p) => (
-                    <SelectItem key={p.value} value={p.value}>
-                      <span style={{ color: p.color }}>{p.label}</span>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              {/* Due date */}
-              <div className="relative">
-                <input
-                  type="date"
-                  {...register("dueDate")}
-                  className={cn(
-                    "h-8 px-2.5 text-xs rounded-lg border border-[#1E1E25] bg-transparent",
-                    "text-[#A1A1AA] hover:border-[#2A2A35] focus:outline-none focus:border-[#7C5CFF]/50",
-                    "transition-colors duration-150 cursor-pointer",
-                    "[color-scheme:dark]"
-                  )}
+              <div className="animate-fade-in">
+                <TagSelector
+                  allTags={allTags}
+                  selectedIds={selectedTagIds}
+                  onChange={setSelectedTagIds}
+                  onClose={() => setShowTagSelector(false)}
                 />
               </div>
-
-              {/* Recurring */}
-              <button
-                type="button"
-                onClick={() => setValue("isRecurring", !isRecurring)}
-                className={cn(
-                  "inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg text-xs border transition-all duration-150",
-                  isRecurring
-                    ? "border-[#7C5CFF]/40 bg-[#7C5CFF]/10 text-[#7C5CFF]"
-                    : "border-[#1E1E25] text-[#52525B] hover:border-[#2A2A35] hover:text-[#A1A1AA]"
-                )}
-              >
-                <Repeat className="h-3 w-3" />
-                Repeat
-              </button>
-
-              {isRecurring && (
-                <Select
-                  value={watch("recurringRule") ?? "weekly"}
-                  onValueChange={(v) => setValue("recurringRule", v as FormData["recurringRule"])}
-                >
-                  <SelectTrigger className="h-8 w-auto text-xs border-[#1E1E25] bg-transparent px-2.5">
-                    <SelectValue placeholder="Frequency" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {RECURRING_OPTIONS.map((r) => (
-                      <SelectItem key={r.value} value={r.value}>{r.label}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
-            </div>
+            )}
           </div>
 
-          <DialogFooter>
-            <Button variant="ghost" type="button" size="sm" onClick={onClose}>
+          {/* Meta toolbar — subtle divider */}
+          <div className="px-5 py-3 border-t border-[#1A1A22] flex flex-wrap items-center gap-1.5">
+            {/* Status pill */}
+            <Select
+              value={status}
+              onValueChange={(v) => setValue("status", v as FormData["status"])}
+            >
+              <SelectTrigger className={cn(
+                "h-7 w-auto text-[11px] font-medium border rounded-lg px-2.5 gap-1.5 bg-transparent",
+                "focus:ring-0 focus:ring-offset-0",
+                status === "DONE"        && "border-[#22C55E]/30 text-[#22C55E] bg-[#22C55E]/8",
+                status === "IN_PROGRESS" && "border-[#22D3EE]/30 text-[#22D3EE] bg-[#22D3EE]/8",
+                status === "TODO"        && "border-[#1E1E25] text-[#A1A1AA]"
+              )}>
+                <span
+                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                  style={{ backgroundColor: statusOption?.dot }}
+                />
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {STATUS_OPTIONS.map((s) => (
+                  <SelectItem key={s.value} value={s.value}>
+                    <span className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: s.dot }} />
+                      {s.label}
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Priority pill */}
+            <Select
+              value={priority}
+              onValueChange={(v) => setValue("priority", v as FormData["priority"])}
+            >
+              <SelectTrigger className="h-7 w-auto text-[11px] font-medium border border-[#1E1E25] rounded-lg px-2.5 bg-transparent focus:ring-0 focus:ring-offset-0">
+                <span className="font-semibold" style={{ color: priorityOption?.color }}>
+                  {priorityOption?.label}
+                </span>
+              </SelectTrigger>
+              <SelectContent>
+                {PRIORITY_OPTIONS.map((p) => (
+                  <SelectItem key={p.value} value={p.value}>
+                    <span className="font-medium" style={{ color: p.color }}>{p.label}</span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Due date */}
+            <input
+              type="date"
+              {...register("dueDate")}
+              className={cn(
+                "h-7 px-2.5 text-[11px] font-medium rounded-lg border border-[#1E1E25] bg-transparent",
+                "text-[#A1A1AA] hover:border-[#2A2A35] focus:outline-none focus:border-[#7C5CFF]/40",
+                "transition-colors duration-150 cursor-pointer [color-scheme:dark]"
+              )}
+            />
+
+            {/* Recurring toggle */}
+            <button
+              type="button"
+              onClick={() => setValue("isRecurring", !isRecurring)}
+              className={cn(
+                "inline-flex items-center gap-1 h-7 px-2.5 rounded-lg text-[11px] font-medium border transition-all duration-150",
+                isRecurring
+                  ? "border-[#7C5CFF]/35 bg-[#7C5CFF]/8 text-[#7C5CFF]"
+                  : "border-[#1E1E25] text-[#52525B] hover:border-[#2A2A35] hover:text-[#A1A1AA]"
+              )}
+            >
+              <Repeat className="h-3 w-3" />
+              Repeat
+            </button>
+
+            {isRecurring && (
+              <Select
+                value={watch("recurringRule") ?? "weekly"}
+                onValueChange={(v) => setValue("recurringRule", v as FormData["recurringRule"])}
+              >
+                <SelectTrigger className="h-7 w-auto text-[11px] border-[#7C5CFF]/30 bg-[#7C5CFF]/8 text-[#7C5CFF] rounded-lg px-2.5 focus:ring-0">
+                  <SelectValue placeholder="Frequency" />
+                </SelectTrigger>
+                <SelectContent>
+                  {RECURRING_OPTIONS.map((r) => (
+                    <SelectItem key={r.value} value={r.value}>{r.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          </div>
+
+          {/* Footer */}
+          <div className="px-5 py-3.5 border-t border-[#1A1A22] flex items-center justify-end gap-2">
+            <Button variant="ghost" type="button" size="sm" onClick={onClose} className="text-[#52525B] hover:text-[#A1A1AA]">
               Cancel
             </Button>
-            <Button variant="primary" type="submit" size="sm" loading={isSubmitting}>
+            <Button
+              variant="primary"
+              type="submit"
+              size="sm"
+              loading={isSubmitting}
+              className="min-w-[100px]"
+            >
               {initialTask ? "Save changes" : "Create task"}
             </Button>
-          </DialogFooter>
+          </div>
         </form>
       </DialogContent>
     </Dialog>
