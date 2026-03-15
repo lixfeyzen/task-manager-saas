@@ -33,7 +33,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#0B0B0F]">
+    <div className="flex h-screen overflow-hidden bg-[#F8F7FF]">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header
