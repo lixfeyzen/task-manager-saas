@@ -60,9 +60,16 @@ export function TaskList({
 
   if (isLoading) {
     return (
-      <div className="p-4 space-y-2">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-12 rounded-xl skeleton" />
+      <div className="divide-y divide-[#1E1E25]/60">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="flex items-center gap-3 px-4 py-3" style={{ opacity: 1 - i * 0.12 }}>
+            <div className="w-[18px] h-[18px] rounded-full skeleton shrink-0" />
+            <div className="flex-1 space-y-1.5">
+              <div className="skeleton h-3 rounded-full" style={{ width: `${55 + (i % 3) * 15}%` }} />
+              {i % 2 === 0 && <div className="skeleton h-2 rounded-full w-1/3" />}
+            </div>
+            <div className="skeleton h-2 w-10 rounded-full" />
+          </div>
         ))}
       </div>
     );
@@ -70,13 +77,16 @@ export function TaskList({
 
   if (tasks.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 gap-4">
-        <div className="w-16 h-16 rounded-2xl bg-[#111116] border border-[#1E1E25] flex items-center justify-center">
-          <CheckSquare className="h-7 w-7 text-[#2A2A35]" />
+      <div className="flex flex-col items-center justify-center py-24 gap-3">
+        <div className="relative">
+          <div className="absolute inset-0 rounded-2xl bg-[#7C5CFF]/8 blur-xl scale-150" />
+          <div className="relative w-14 h-14 rounded-2xl bg-[#111116] border border-[#1E1E25] flex items-center justify-center">
+            <CheckSquare className="h-6 w-6 text-[#2A2A35]" />
+          </div>
         </div>
         <div className="text-center">
-          <p className="text-[#A1A1AA] font-medium text-sm">All clear</p>
-          <p className="text-[#52525B] text-xs mt-1">No tasks match your filters</p>
+          <p className="text-[#71717A] font-medium text-sm">No tasks found</p>
+          <p className="text-[#3A3A45] text-xs mt-0.5">Try adjusting your filters</p>
         </div>
       </div>
     );
@@ -96,17 +106,36 @@ export function TaskList({
                 {/* Group header */}
                 <button
                   onClick={() => toggleGroup(group.key)}
-                  className="w-full flex items-center gap-2 px-4 py-2 text-[11px] font-semibold text-[#52525B] uppercase tracking-wider hover:text-[#A1A1AA] transition-colors duration-150"
+                  className="w-full flex items-center gap-2.5 px-4 py-2 text-[10px] font-semibold uppercase tracking-widest hover:text-[#A1A1AA] transition-colors duration-150 group/header"
                 >
+                  {/* Color dot */}
                   <span className={cn(
-                    "w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold",
-                    group.key === "DONE"        && "bg-[#22C55E]/15 text-[#22C55E]",
-                    group.key === "IN_PROGRESS" && "bg-[#22D3EE]/15 text-[#22D3EE]",
-                    group.key === "TODO"        && "bg-[#52525B]/20 text-[#52525B]"
+                    "w-1.5 h-1.5 rounded-full shrink-0",
+                    group.key === "DONE"        && "bg-[#22C55E]",
+                    group.key === "IN_PROGRESS" && "bg-[#22D3EE]",
+                    group.key === "TODO"        && "bg-[#52525B]"
+                  )} />
+                  <span className={cn(
+                    "transition-colors duration-150",
+                    group.key === "DONE"        && "text-[#22C55E]/60 group-hover/header:text-[#22C55E]",
+                    group.key === "IN_PROGRESS" && "text-[#22D3EE]/60 group-hover/header:text-[#22D3EE]",
+                    group.key === "TODO"        && "text-[#52525B] group-hover/header:text-[#A1A1AA]"
+                  )}>
+                    {group.label}
+                  </span>
+                  <span className={cn(
+                    "text-[10px] font-semibold tabular-nums px-1.5 py-0.5 rounded-full",
+                    group.key === "DONE"        && "bg-[#22C55E]/12 text-[#22C55E]/70",
+                    group.key === "IN_PROGRESS" && "bg-[#22D3EE]/12 text-[#22D3EE]/70",
+                    group.key === "TODO"        && "bg-[#52525B]/15 text-[#52525B]"
                   )}>
                     {groupTasks.length}
                   </span>
-                  {group.label}
+                  <div className="flex-1 h-px bg-[#1E1E25]/60 ml-1" />
+                  <span className={cn(
+                    "transition-all duration-150 text-[#3A3A45]",
+                    isCollapsed ? "rotate-[-90deg]" : "rotate-0"
+                  )}>▾</span>
                 </button>
 
                 {/* Tasks */}

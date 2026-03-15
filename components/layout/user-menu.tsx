@@ -23,20 +23,26 @@ export function UserMenu({ user }: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 rounded-lg p-1 hover:bg-white/5 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7C5CFF]/60">
-          <Avatar className="h-7 w-7">
+        <button className="flex items-center gap-2 rounded-lg p-0.5 hover:bg-white/[0.06] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7C5CFF]/60">
+          <Avatar className="h-7 w-7 ring-1 ring-[#ffffff10]">
             <AvatarImage src={user?.image ?? undefined} />
             <AvatarFallback className="text-[11px]">{initials}</AvatarFallback>
           </Avatar>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-52">
+      <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[#F4F4F5] font-medium text-sm">
-              {user?.name ?? "User"}
-            </span>
-            <span className="text-[#52525B] text-[11px] font-normal">{user?.email}</span>
+          <div className="flex items-center gap-2.5 py-0.5">
+            <Avatar className="h-8 w-8 shrink-0 ring-1 ring-[#ffffff10]">
+              <AvatarImage src={user?.image ?? undefined} />
+              <AvatarFallback className="text-[11px]">{initials}</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col gap-px min-w-0">
+              <span className="text-[#F4F4F5] font-semibold text-[13px] truncate">
+                {user?.name ?? "User"}
+              </span>
+              <span className="text-[#52525B] text-[10px] font-normal truncate">{user?.email}</span>
+            </div>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

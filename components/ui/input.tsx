@@ -15,7 +15,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="flex flex-col gap-1.5">
         {label && (
-          <label className="text-xs font-medium text-[#A1A1AA] tracking-wide">
+          <label className="text-[11px] font-semibold text-[#71717A] uppercase tracking-wider">
             {label}
           </label>
         )}
@@ -29,12 +29,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             type={type}
             ref={ref}
             className={cn(
-              "w-full bg-[#111116] border border-[#1E1E25] text-[#F4F4F5] text-sm rounded-lg",
+              "w-full bg-[#0F0F14] border border-[#1E1E25] text-[#F4F4F5] text-sm rounded-lg",
               "px-3 py-2.5 transition-all duration-150",
-              "placeholder:text-[#52525B]",
-              "hover:border-[#2A2A35]",
-              "focus:outline-none focus:border-[#7C5CFF]/50 focus:ring-1 focus:ring-[#7C5CFF]/30 focus:bg-[#111116]",
-              error && "border-[#F43F5E]/50 focus:border-[#F43F5E]/70 focus:ring-[#F43F5E]/20",
+              "placeholder:text-[#3A3A45]",
+              "hover:border-[#2A2A35] hover:bg-[#111116]",
+              "focus:outline-none focus:border-[#7C5CFF]/50 focus:ring-2 focus:ring-[#7C5CFF]/15 focus:bg-[#111116]",
+              error && "border-[#F43F5E]/40 focus:border-[#F43F5E]/60 focus:ring-[#F43F5E]/15",
               icon && "pl-9",
               suffix && "pr-9",
               className

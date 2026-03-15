@@ -144,8 +144,20 @@ export default function TagsPage() {
           return (
             <div
               key={tag.id}
-              className="group flex items-center gap-3 p-4 rounded-xl bg-[#111116] border border-[#1E1E25] hover:border-[#2A2A35] transition-all duration-150"
+              className={cn(
+                "group relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-150",
+                "bg-[#111116] border",
+                isEditing
+                  ? "border-[#7C5CFF]/25"
+                  : "border-[#1E1E25] hover:border-[#2A2A35] hover:bg-[#16161D]"
+              )}
             >
+              {!isEditing && (
+                <span
+                  className="absolute left-0 top-[20%] bottom-[20%] w-[2px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                  style={{ backgroundColor: tag.color }}
+                />
+              )}
               {isEditing ? (
                 <>
                   <div className="flex gap-1.5 flex-wrap">
@@ -186,25 +198,25 @@ export default function TagsPage() {
               ) : (
                 <>
                   <span
-                    className="w-3 h-3 rounded-full shrink-0"
-                    style={{ backgroundColor: tag.color }}
+                    className="w-3.5 h-3.5 rounded-full shrink-0"
+                    style={{
+                      backgroundColor: tag.color,
+                      boxShadow: `0 0 6px rgba(${r},${g},${b},0.4)`,
+                    }}
                   />
-                  <span
-                    className="flex-1 text-sm font-medium"
-                    style={{ color: tag.color }}
-                  >
+                  <span className="flex-1 text-[13px] font-medium text-[#D4D4D8] group-hover:text-[#F4F4F5] transition-colors duration-150">
                     {tag.name}
                   </span>
-                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-150 translate-x-1 group-hover:translate-x-0">
                     <button
                       onClick={() => startEdit(tag)}
-                      className="w-7 h-7 rounded-lg text-[#52525B] hover:text-[#A1A1AA] hover:bg-white/5 flex items-center justify-center"
+                      className="w-7 h-7 rounded-lg text-[#52525B] hover:text-[#A1A1AA] hover:bg-white/[0.06] flex items-center justify-center transition-all"
                     >
                       <Edit2 className="h-3.5 w-3.5" />
                     </button>
                     <button
                       onClick={() => handleDelete(tag.id)}
-                      className="w-7 h-7 rounded-lg text-[#52525B] hover:text-[#F43F5E] hover:bg-[#F43F5E]/10 flex items-center justify-center"
+                      className="w-7 h-7 rounded-lg text-[#52525B] hover:text-[#F43F5E] hover:bg-[#F43F5E]/10 flex items-center justify-center transition-all"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>

@@ -146,24 +146,26 @@ export default function TasksPage() {
   return (
     <div className="h-full flex flex-col">
       {/* Page header */}
-      <div className="px-6 pt-6 pb-4 border-b border-[#1E1E25] space-y-4">
+      <div className="px-6 pt-5 pb-4 border-b border-[#1E1E25]/60 space-y-3">
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-[#F4F4F5] font-semibold text-lg">My Tasks</h1>
-            <p className="text-[#52525B] text-xs mt-0.5">
-              {incompleteCount} remaining
-            </p>
+          <div className="flex items-center gap-3">
+            <h1 className="text-[#F4F4F5] font-semibold text-[17px] tracking-tight">My Tasks</h1>
+            {incompleteCount > 0 && (
+              <span className="text-[10px] font-semibold tabular-nums px-1.5 py-0.5 rounded-full bg-[#7C5CFF]/12 text-[#7C5CFF]/80 border border-[#7C5CFF]/15">
+                {incompleteCount}
+              </span>
+            )}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             {/* View mode toggle */}
-            <div className="flex items-center bg-[#111116] border border-[#1E1E25] rounded-lg p-0.5 gap-0.5">
+            <div className="flex items-center bg-[#0F0F14] border border-[#1E1E25] rounded-lg p-0.5 gap-px">
               <button
                 onClick={() => setViewMode("list")}
                 className={cn(
                   "p-1.5 rounded-md transition-all duration-150",
                   viewMode === "list"
-                    ? "bg-[#1E1E25] text-[#F4F4F5]"
-                    : "text-[#52525B] hover:text-[#A1A1AA]"
+                    ? "bg-[#22222C] text-[#F4F4F5] shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
+                    : "text-[#3A3A45] hover:text-[#71717A]"
                 )}
               >
                 <LayoutList className="h-3.5 w-3.5" />
@@ -173,8 +175,8 @@ export default function TasksPage() {
                 className={cn(
                   "p-1.5 rounded-md transition-all duration-150",
                   viewMode === "grouped"
-                    ? "bg-[#1E1E25] text-[#F4F4F5]"
-                    : "text-[#52525B] hover:text-[#A1A1AA]"
+                    ? "bg-[#22222C] text-[#F4F4F5] shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
+                    : "text-[#3A3A45] hover:text-[#71717A]"
                 )}
               >
                 <Grid3x3 className="h-3.5 w-3.5" />
@@ -193,11 +195,11 @@ export default function TasksPage() {
 
         {/* Search */}
         <Input
-          icon={<Search className="h-3.5 w-3.5" />}
+          icon={<Search className="h-3 w-3" />}
           placeholder="Search tasks…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="max-w-sm h-8 text-xs"
+          className="max-w-xs h-8 text-[12px]"
         />
 
         {/* Filters */}
