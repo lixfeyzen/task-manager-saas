@@ -1,39 +1,53 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #0B0B0F;
-  --color-surface: #111116;
-  --color-surface-elevated: #16161D;
-  --color-border: #1E1E25;
-  --color-primary: #7C5CFF;
-  --color-primary-hover: #6D4DF5;
+  --color-background: #F8F7FF;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+  --color-sidebar: #F0EDFF;
+  --color-border: #E4E0F5;
+  --color-border-strong: #C9C2EC;
+  --color-primary: #7C3AED;
+  --color-primary-hover: #6D28D9;
+  --color-primary-light: #EDE9FE;
   --color-primary-foreground: #FFFFFF;
-  --color-success: #22C55E;
-  --color-warning: #F59E0B;
-  --color-danger: #F43F5E;
-  --color-cyan: #22D3EE;
-  --color-text-primary: #F4F4F5;
-  --color-text-secondary: #A1A1AA;
-  --color-text-tertiary: #52525B;
+  --color-success: #059669;
+  --color-success-light: #D1FAE5;
+  --color-warning: #D97706;
+  --color-warning-light: #FEF3C7;
+  --color-danger: #DC2626;
+  --color-danger-light: #FEE2E2;
+  --color-cyan: #0891B2;
+  --color-cyan-light: #CFFAFE;
+  --color-text-primary: #1E1B4B;
+  --color-text-secondary: #6B7280;
+  --color-text-tertiary: #9CA3AF;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
   --font-mono: ui-monospace, 'Cascadia Code', 'Fira Mono', monospace;
 }
 
 :root {
-  --background: #0B0B0F;
-  --surface: #111116;
-  --surface-elevated: #16161D;
-  --border: #1E1E25;
-  --primary: #7C5CFF;
-  --primary-hover: #6D4DF5;
-  --text-primary: #F4F4F5;
-  --text-secondary: #A1A1AA;
-  --text-tertiary: #52525B;
-  --success: #22C55E;
-  --warning: #F59E0B;
-  --danger: #F43F5E;
-  --cyan: #22D3EE;
-  --radius: 8px;
+  --background: #F8F7FF;
+  --surface: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --sidebar: #F0EDFF;
+  --border: #E4E0F5;
+  --border-strong: #C9C2EC;
+  --primary: #7C3AED;
+  --primary-hover: #6D28D9;
+  --primary-light: #EDE9FE;
+  --text-primary: #1E1B4B;
+  --text-secondary: #6B7280;
+  --text-tertiary: #9CA3AF;
+  --success: #059669;
+  --success-light: #D1FAE5;
+  --warning: #D97706;
+  --warning-light: #FEF3C7;
+  --danger: #DC2626;
+  --danger-light: #FEE2E2;
+  --cyan: #0891B2;
+  --cyan-light: #CFFAFE;
+  --radius: 10px;
 }
 
 * {
@@ -43,7 +57,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
 }
 
@@ -58,19 +72,19 @@ body {
 
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.14); }
+::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.2); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(124,58,237,0.35); }
 
-::selection { background: rgba(124,92,255,0.3); color: #fff; }
+::selection { background: rgba(124,58,237,0.15); color: #1E1B4B; }
 
-:focus-visible { outline: 2px solid rgba(124,92,255,0.6); outline-offset: 2px; border-radius: 6px; }
+:focus-visible { outline: 2px solid rgba(124,58,237,0.5); outline-offset: 2px; border-radius: 6px; }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 100px #111116 inset;
-  -webkit-text-fill-color: #F4F4F5;
-  caret-color: #F4F4F5;
+  -webkit-box-shadow: 0 0 0 100px #FFFFFF inset;
+  -webkit-text-fill-color: #1E1B4B;
+  caret-color: #1E1B4B;
 }
 
 button, a, [role="button"] { transition: all 150ms ease-out; }
@@ -79,19 +93,20 @@ input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
 
 .glass {
-  background: rgba(17,17,22,0.85);
+  background: rgba(255,255,255,0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(124,58,237,0.12);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #7C5CFF, #22D3EE);
+  background: linear-gradient(135deg, #7C3AED, #0891B2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.glow-primary { box-shadow: 0 0 20px rgba(124,92,255,0.25); }
+.glow-primary { box-shadow: 0 4px 20px rgba(124,58,237,0.18); }
 
 @keyframes shimmer {
   0% { background-position: -200% 0; }
@@ -125,9 +140,9 @@ input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
 .skeleton {
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0.04) 25%,
-    rgba(255,255,255,0.07) 50%,
-    rgba(255,255,255,0.04) 75%
+    rgba(124,58,237,0.04) 25%,
+    rgba(124,58,237,0.08) 50%,
+    rgba(124,58,237,0.04) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 2s infinite linear;

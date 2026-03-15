@@ -86,15 +86,15 @@ export default function UpcomingPage() {
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
-      <div className="px-6 pt-6 pb-4 border-b border-[#1E1E25]">
+      <div className="px-6 pt-6 pb-4 border-b border-[#E4E0F5]">
         <div className="flex items-start justify-between">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <CalendarDays className="h-4 w-4 text-[#22D3EE]" />
-              <span className="text-xs font-medium text-[#22D3EE] uppercase tracking-wide">Upcoming</span>
+              <CalendarDays className="h-4 w-4 text-[#0891B2]" />
+              <span className="text-xs font-medium text-[#0891B2] uppercase tracking-wide">Upcoming</span>
             </div>
-            <h1 className="text-[#F4F4F5] font-semibold text-lg">Next {DAYS_AHEAD} days</h1>
-            <p className="text-[#52525B] text-xs mt-0.5">{tasks.length} tasks scheduled</p>
+            <h1 className="text-[#1E1B4B] font-semibold text-lg">Next {DAYS_AHEAD} days</h1>
+            <p className="text-[#9CA3AF] text-xs mt-0.5">{tasks.length} tasks scheduled</p>
           </div>
           <Button
             variant="primary"
@@ -121,27 +121,27 @@ export default function UpcomingPage() {
               <div className="flex items-center gap-2.5 mb-2">
                 <span className={cn(
                   "text-[11px] font-semibold uppercase tracking-widest",
-                  isToday ? "text-[#F59E0B]" : "text-[#3A3A45]"
+                  isToday ? "text-[#D97706]" : "text-[#9CA3AF]"
                 )}>
                   {label}
                 </span>
                 <span className={cn(
                   "text-[10px] font-semibold tabular-nums px-1.5 py-0.5 rounded-full",
-                  isToday ? "bg-[#F59E0B]/12 text-[#F59E0B]" : "bg-[#1E1E25] text-[#52525B]"
+                  isToday ? "bg-[#FEF3C7] text-[#D97706]" : "bg-[#F0EDFF] text-[#9CA3AF]"
                 )}>
                   {dayTasks.length}
                 </span>
-                <div className={cn("flex-1 h-px", isToday ? "bg-[#F59E0B]/15" : "bg-[#1E1E25]")} />
+                <div className={cn("flex-1 h-px", isToday ? "bg-[#FDE68A]" : "bg-[#E4E0F5]")} />
                 <button
                   onClick={() => { setSelectedDate(day); setEditTask(null); setFormOpen(true); }}
-                  className="text-[#3A3A45] hover:text-[#71717A] transition-colors duration-150"
+                  className="text-[#C4B5FD] hover:text-[#7C3AED] transition-colors duration-150"
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </button>
               </div>
               <div className={cn(
                 "border rounded-xl overflow-hidden",
-                isToday ? "bg-[#111116] border-[#F59E0B]/10" : "bg-[#111116] border-[#1E1E25]"
+                isToday ? "bg-[#FFFBEB] border-[#FDE68A]" : "bg-white border-[#E4E0F5]"
               )}>
                 {dayTasks.map((task) => (
                   <TaskCard
@@ -162,13 +162,13 @@ export default function UpcomingPage() {
         {noDateTasks.length > 0 && (
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#52525B]">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#9CA3AF]">
                 No date
               </span>
-              <span className="text-[11px] bg-[#1E1E25] text-[#52525B] px-1.5 py-0.5 rounded-full">{noDateTasks.length}</span>
-              <div className="flex-1 h-px bg-[#1E1E25]" />
+              <span className="text-[11px] bg-[#F0EDFF] text-[#9CA3AF] px-1.5 py-0.5 rounded-full">{noDateTasks.length}</span>
+              <div className="flex-1 h-px bg-[#E4E0F5]" />
             </div>
-            <div className="bg-[#111116] border border-[#1E1E25] rounded-xl overflow-hidden">
+            <div className="bg-white border border-[#E4E0F5] rounded-xl overflow-hidden">
               {noDateTasks.map((task) => (
                 <TaskCard
                   key={task.id}

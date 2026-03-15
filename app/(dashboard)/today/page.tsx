@@ -79,15 +79,15 @@ export default function TodayPage() {
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
-      <div className="px-6 pt-6 pb-4 border-b border-[#1E1E25]">
+      <div className="px-6 pt-6 pb-4 border-b border-[#E4E0F5]">
         <div className="flex items-start justify-between">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <Star className="h-4 w-4 text-[#F59E0B]" fill="#F59E0B" />
-              <span className="text-xs font-medium text-[#F59E0B] uppercase tracking-wide">Today</span>
+              <Star className="h-4 w-4 text-[#D97706]" fill="#D97706" />
+              <span className="text-xs font-medium text-[#D97706] uppercase tracking-wide">Today</span>
             </div>
-            <h1 className="text-[#F4F4F5] font-semibold text-lg">{todayStr}</h1>
-            <p className="text-[#52525B] text-xs mt-0.5">
+            <h1 className="text-[#1E1B4B] font-semibold text-lg">{todayStr}</h1>
+            <p className="text-[#9CA3AF] text-xs mt-0.5">
               {incomplete} tasks remaining
             </p>
           </div>
@@ -105,31 +105,31 @@ export default function TodayPage() {
         {tasks.length > 0 && (
           <div className="mt-4 space-y-1.5">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] text-[#52525B]">
+              <span className="text-[11px] text-[#9CA3AF]">
                 {progress >= 100
-                  ? <span className="text-[#22C55E] font-medium">All done! 🎉</span>
+                  ? <span className="text-[#059669] font-medium">All done! 🎉</span>
                   : <>{completed} of {tasks.length} completed</>
                 }
               </span>
               <span className={cn(
                 "text-[11px] font-semibold tabular-nums",
-                progress >= 100 ? "text-[#22C55E]" : progress > 0 ? "text-[#A1A1AA]" : "text-[#52525B]"
+                progress >= 100 ? "text-[#059669]" : progress > 0 ? "text-[#7C3AED]" : "text-[#9CA3AF]"
               )}>
                 {Math.round(progress)}%
               </span>
             </div>
-            <div className="h-1 bg-[#1E1E25] rounded-full overflow-hidden">
+            <div className="h-1.5 bg-[#E4E0F5] rounded-full overflow-hidden">
               <div
                 className="h-full rounded-full transition-all duration-700 ease-out"
                 style={{
                   width: `${progress}%`,
                   background: progress >= 100
-                    ? "linear-gradient(to right, #22C55E, #4ADE80)"
-                    : "linear-gradient(to right, #7C5CFF, #22D3EE)",
+                    ? "linear-gradient(to right, #059669, #10B981)"
+                    : "linear-gradient(to right, #7C3AED, #0891B2)",
                   boxShadow: progress > 0
                     ? progress >= 100
-                      ? "0 0 8px rgba(34,197,94,0.5)"
-                      : "0 0 8px rgba(124,92,255,0.4)"
+                      ? "0 0 6px rgba(5,150,105,0.3)"
+                      : "0 0 6px rgba(124,58,237,0.25)"
                     : "none",
                 }}
               />

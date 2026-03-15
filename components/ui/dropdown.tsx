@@ -21,8 +21,8 @@ const DropdownMenuContent = React.forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        "z-50 min-w-[180px] bg-[#16161D] border border-[#1E1E25] rounded-xl p-1",
-        "shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.05)]",
+        "z-50 min-w-[180px] bg-white border border-[#E4E0F5] rounded-xl p-1",
+        "shadow-[0_8px_24px_rgba(124,58,237,0.1),0_2px_8px_rgba(0,0,0,0.08)]",
         "data-[state=open]:animate-[scaleIn_150ms_ease-out]",
         "data-[state=closed]:animate-[fadeOut_100ms_ease-out]",
         "focus:outline-none",
@@ -47,8 +47,8 @@ const DropdownMenuItem = React.forwardRef<
       "relative flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm transition-colors duration-100",
       "focus:outline-none select-none",
       destructive
-        ? "text-[#F43F5E] focus:bg-[#F43F5E]/10"
-        : "text-[#A1A1AA] focus:bg-white/5 focus:text-[#F4F4F5]",
+        ? "text-[#DC2626] focus:bg-[#FEE2E2]"
+        : "text-[#4B5563] focus:bg-[#F0EDFF] focus:text-[#1E1B4B]",
       inset && "pl-8",
       "data-[disabled]:opacity-40 data-[disabled]:pointer-events-none",
       className
@@ -66,7 +66,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     ref={ref}
     className={cn(
       "relative flex cursor-pointer items-center rounded-lg py-1.5 pl-8 pr-2.5 text-sm",
-      "text-[#A1A1AA] focus:bg-white/5 focus:text-[#F4F4F5] focus:outline-none",
+      "text-[#4B5563] focus:bg-[#F0EDFF] focus:text-[#1E1B4B] focus:outline-none",
       "transition-colors duration-100 select-none",
       className
     )}
@@ -75,7 +75,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
   >
     <span className="absolute left-2.5 flex h-3.5 w-3.5 items-center justify-center">
       <DropdownMenuPrimitive.ItemIndicator>
-        <Check className="h-3.5 w-3.5 text-[#7C5CFF]" />
+        <Check className="h-3.5 w-3.5 text-[#7C3AED]" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}
@@ -89,7 +89,7 @@ const DropdownMenuLabel = React.forwardRef<
 >(({ className, inset, ...props }, ref) => (
   <DropdownMenuPrimitive.Label
     ref={ref}
-    className={cn("px-2.5 py-1.5 text-[11px] font-medium text-[#52525B] uppercase tracking-wider", inset && "pl-8", className)}
+    className={cn("px-2.5 py-1.5 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider", inset && "pl-8", className)}
     {...props}
   />
 ));
@@ -101,7 +101,7 @@ const DropdownMenuSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.Separator
     ref={ref}
-    className={cn("-mx-1 my-1 h-px bg-[#1E1E25]", className)}
+    className={cn("-mx-1 my-1 h-px bg-[#E4E0F5]", className)}
     {...props}
   />
 ));
@@ -115,8 +115,8 @@ const DropdownMenuSubTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       "flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm",
-      "text-[#A1A1AA] focus:bg-white/5 focus:text-[#F4F4F5] focus:outline-none",
-      "data-[state=open]:bg-white/5",
+      "text-[#4B5563] focus:bg-[#F0EDFF] focus:text-[#1E1B4B] focus:outline-none",
+      "data-[state=open]:bg-[#F0EDFF]",
       inset && "pl-8",
       className
     )}
@@ -135,8 +135,8 @@ const DropdownMenuSubContent = React.forwardRef<
   <DropdownMenuPrimitive.SubContent
     ref={ref}
     className={cn(
-      "z-50 min-w-[160px] bg-[#16161D] border border-[#1E1E25] rounded-xl p-1",
-      "shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
+      "z-50 min-w-[160px] bg-white border border-[#E4E0F5] rounded-xl p-1",
+      "shadow-[0_8px_24px_rgba(124,58,237,0.1)]",
       "data-[state=open]:animate-[scaleIn_150ms_ease-out]",
       "focus:outline-none",
       className
@@ -147,7 +147,7 @@ const DropdownMenuSubContent = React.forwardRef<
 DropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayName;
 
 const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => (
-  <span className={cn("ml-auto text-[11px] text-[#52525B] tracking-widest", className)} {...props} />
+  <span className={cn("ml-auto text-[11px] text-[#9CA3AF] tracking-widest", className)} {...props} />
 );
 DropdownMenuShortcut.displayName = "DropdownMenuShortcut";
 

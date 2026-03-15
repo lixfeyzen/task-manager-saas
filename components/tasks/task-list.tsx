@@ -60,7 +60,7 @@ export function TaskList({
 
   if (isLoading) {
     return (
-      <div className="divide-y divide-[#1E1E25]/60">
+      <div className="divide-y divide-[#E4E0F5]">
         {Array.from({ length: 6 }).map((_, i) => (
           <div key={i} className="flex items-center gap-3 px-4 py-3" style={{ opacity: 1 - i * 0.12 }}>
             <div className="w-[18px] h-[18px] rounded-full skeleton shrink-0" />
@@ -79,14 +79,14 @@ export function TaskList({
     return (
       <div className="flex flex-col items-center justify-center py-24 gap-3">
         <div className="relative">
-          <div className="absolute inset-0 rounded-2xl bg-[#7C5CFF]/8 blur-xl scale-150" />
-          <div className="relative w-14 h-14 rounded-2xl bg-[#111116] border border-[#1E1E25] flex items-center justify-center">
-            <CheckSquare className="h-6 w-6 text-[#2A2A35]" />
+          <div className="absolute inset-0 rounded-2xl bg-[#7C3AED]/8 blur-xl scale-150" />
+          <div className="relative w-14 h-14 rounded-2xl bg-[#F0EDFF] border border-[#E4E0F5] flex items-center justify-center">
+            <CheckSquare className="h-6 w-6 text-[#C4B5FD]" />
           </div>
         </div>
         <div className="text-center">
-          <p className="text-[#71717A] font-medium text-sm">No tasks found</p>
-          <p className="text-[#3A3A45] text-xs mt-0.5">Try adjusting your filters</p>
+          <p className="text-[#6B7280] font-medium text-sm">No tasks found</p>
+          <p className="text-[#9CA3AF] text-xs mt-0.5">Try adjusting your filters</p>
         </div>
       </div>
     );
@@ -106,34 +106,34 @@ export function TaskList({
                 {/* Group header */}
                 <button
                   onClick={() => toggleGroup(group.key)}
-                  className="w-full flex items-center gap-2.5 px-4 py-2 text-[10px] font-semibold uppercase tracking-widest hover:text-[#A1A1AA] transition-colors duration-150 group/header"
+                  className="w-full flex items-center gap-2.5 px-4 py-2 text-[10px] font-semibold uppercase tracking-widest hover:text-[#1E1B4B] transition-colors duration-150 group/header"
                 >
                   {/* Color dot */}
                   <span className={cn(
                     "w-1.5 h-1.5 rounded-full shrink-0",
-                    group.key === "DONE"        && "bg-[#22C55E]",
-                    group.key === "IN_PROGRESS" && "bg-[#22D3EE]",
-                    group.key === "TODO"        && "bg-[#52525B]"
+                    group.key === "DONE"        && "bg-[#059669]",
+                    group.key === "IN_PROGRESS" && "bg-[#0891B2]",
+                    group.key === "TODO"        && "bg-[#9CA3AF]"
                   )} />
                   <span className={cn(
                     "transition-colors duration-150",
-                    group.key === "DONE"        && "text-[#22C55E]/60 group-hover/header:text-[#22C55E]",
-                    group.key === "IN_PROGRESS" && "text-[#22D3EE]/60 group-hover/header:text-[#22D3EE]",
+                    group.key === "DONE"        && "text-[#059669]/60 group-hover/header:text-[#059669]",
+                    group.key === "IN_PROGRESS" && "text-[#0891B2]/60 group-hover/header:text-[#0891B2]",
                     group.key === "TODO"        && "text-[#52525B] group-hover/header:text-[#A1A1AA]"
                   )}>
                     {group.label}
                   </span>
                   <span className={cn(
                     "text-[10px] font-semibold tabular-nums px-1.5 py-0.5 rounded-full",
-                    group.key === "DONE"        && "bg-[#22C55E]/12 text-[#22C55E]/70",
-                    group.key === "IN_PROGRESS" && "bg-[#22D3EE]/12 text-[#22D3EE]/70",
-                    group.key === "TODO"        && "bg-[#52525B]/15 text-[#52525B]"
+                    group.key === "DONE"        && "bg-[#059669]/12 text-[#059669]/70",
+                    group.key === "IN_PROGRESS" && "bg-[#0891B2]/12 text-[#0891B2]/70",
+                    group.key === "TODO"        && "bg-[#9CA3AF]/15 text-[#52525B]"
                   )}>
                     {groupTasks.length}
                   </span>
-                  <div className="flex-1 h-px bg-[#1E1E25]/60 ml-1" />
+                  <div className="flex-1 h-px bg-[#E4E0F5] ml-1" />
                   <span className={cn(
-                    "transition-all duration-150 text-[#3A3A45]",
+                    "transition-all duration-150 text-[#9CA3AF]",
                     isCollapsed ? "rotate-[-90deg]" : "rotate-0"
                   )}>▾</span>
                 </button>

@@ -34,20 +34,20 @@ export function Sidebar({ savedViews = [], taskCounts = {} }: SidebarProps) {
   const [viewsOpen, setViewsOpen] = useState(true);
 
   return (
-    <aside className="w-56 h-full flex flex-col bg-[#0B0B0F] border-r border-[#1E1E25]/60 shrink-0">
+    <aside className="w-56 h-full flex flex-col bg-[#F0EDFF] border-r border-[#E4E0F5] shrink-0">
       {/* Workspace header */}
-      <div className="h-14 flex items-center px-3.5 border-b border-[#1E1E25]/60">
+      <div className="h-14 flex items-center px-3.5 border-b border-[#E4E0F5]">
         <div className="flex items-center gap-2.5 w-full">
           <div className={cn(
             "w-7 h-7 rounded-lg flex items-center justify-center shrink-0",
-            "bg-gradient-to-br from-[#7C5CFF] to-[#5B3FD9]",
-            "shadow-[0_0_16px_rgba(124,92,255,0.35)]"
+            "bg-gradient-to-br from-[#7C3AED] to-[#5B21B6]",
+            "shadow-[0_2px_12px_rgba(124,58,237,0.35)]"
           )}>
             <CheckSquare className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[13px] font-semibold text-[#F4F4F5] tracking-tight leading-none">TaskFlow</p>
-            <p className="text-[10px] text-[#3A3A45] mt-0.5 leading-none">Workspace</p>
+            <p className="text-[13px] font-semibold text-[#1E1B4B] tracking-tight leading-none">TaskFlow</p>
+            <p className="text-[10px] text-[#9CA3AF] mt-0.5 leading-none">Workspace</p>
           </div>
         </div>
       </div>
@@ -64,17 +64,17 @@ export function Sidebar({ savedViews = [], taskCounts = {} }: SidebarProps) {
               className={cn(
                 "relative flex items-center gap-2.5 px-2.5 py-[7px] rounded-lg text-[13px] transition-all duration-150 group",
                 isActive
-                  ? "bg-[#7C5CFF]/12 text-[#F4F4F5]"
-                  : "text-[#71717A] hover:bg-white/[0.04] hover:text-[#D4D4D8]"
+                  ? "bg-white text-[#1E1B4B] shadow-sm shadow-[#7C3AED]/10"
+                  : "text-[#6B7280] hover:bg-white/60 hover:text-[#1E1B4B]"
               )}
             >
               {/* Active left indicator */}
               {isActive && (
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 bg-[#7C5CFF] rounded-full shadow-[0_0_6px_rgba(124,92,255,0.6)]" />
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 bg-[#7C3AED] rounded-full" />
               )}
               <span className={cn(
                 "shrink-0 transition-colors duration-150",
-                isActive ? "text-[#7C5CFF]" : "text-[#3A3A45] group-hover:text-[#71717A]"
+                isActive ? "text-[#7C3AED]" : "text-[#9CA3AF] group-hover:text-[#6B7280]"
               )}>
                 {item.icon}
               </span>
@@ -83,8 +83,8 @@ export function Sidebar({ savedViews = [], taskCounts = {} }: SidebarProps) {
                 <span className={cn(
                   "text-[10px] font-semibold tabular-nums px-1.5 py-0.5 rounded-full",
                   isActive
-                    ? "bg-[#7C5CFF]/25 text-[#7C5CFF]"
-                    : "bg-[#1E1E25] text-[#52525B] group-hover:bg-[#2A2A35]"
+                    ? "bg-[#7C3AED]/15 text-[#7C3AED]"
+                    : "bg-[#E4E0F5] text-[#9CA3AF] group-hover:bg-[#D8D3F0]"
                 )}>
                   {count}
                 </span>
@@ -94,13 +94,13 @@ export function Sidebar({ savedViews = [], taskCounts = {} }: SidebarProps) {
         })}
 
         {/* Divider */}
-        <div className="my-2 mx-1 h-px bg-[#1E1E25]/60" />
+        <div className="my-2 mx-1 h-px bg-[#E4E0F5]" />
 
         {/* Saved Views section */}
         <div>
           <button
             onClick={() => setViewsOpen(!viewsOpen)}
-            className="w-full flex items-center gap-1.5 px-2.5 py-1 text-[#3A3A45] hover:text-[#71717A] transition-colors duration-150 group rounded-md"
+            className="w-full flex items-center gap-1.5 px-2.5 py-1 text-[#9CA3AF] hover:text-[#6B7280] transition-colors duration-150 group rounded-md"
           >
             <span className="transition-transform duration-150" style={{ transform: viewsOpen ? "rotate(0deg)" : "rotate(-90deg)" }}>
               <ChevronDown className="h-3 w-3" />
@@ -112,7 +112,7 @@ export function Sidebar({ savedViews = [], taskCounts = {} }: SidebarProps) {
           {viewsOpen && (
             <div className="mt-0.5 space-y-px animate-fade-in">
               {savedViews.length === 0 ? (
-                <p className="px-2.5 py-2 text-[11px] text-[#2A2A35]">No saved views yet</p>
+                <p className="px-2.5 py-2 text-[11px] text-[#9CA3AF]">No saved views yet</p>
               ) : (
                 savedViews.map((view) => {
                   const isActive = pathname === `/views/${view.id}`;
@@ -123,14 +123,14 @@ export function Sidebar({ savedViews = [], taskCounts = {} }: SidebarProps) {
                       className={cn(
                         "relative flex items-center gap-2.5 px-2.5 py-[7px] rounded-lg text-[12px] transition-all duration-150",
                         isActive
-                          ? "bg-[#7C5CFF]/12 text-[#F4F4F5]"
-                          : "text-[#71717A] hover:bg-white/[0.04] hover:text-[#D4D4D8]"
+                          ? "bg-white text-[#1E1B4B] shadow-sm"
+                          : "text-[#6B7280] hover:bg-white/60 hover:text-[#1E1B4B]"
                       )}
                     >
                       {isActive && (
-                        <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-3.5 bg-[#7C5CFF] rounded-full" />
+                        <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-3.5 bg-[#7C3AED] rounded-full" />
                       )}
-                      <Bookmark className={cn("h-3 w-3 shrink-0", isActive ? "text-[#7C5CFF]" : "text-[#2A2A35]")} />
+                      <Bookmark className={cn("h-3 w-3 shrink-0", isActive ? "text-[#7C3AED]" : "text-[#C4B5FD]")} />
                       <span className="font-medium truncate">{view.name}</span>
                     </Link>
                   );
@@ -141,7 +141,7 @@ export function Sidebar({ savedViews = [], taskCounts = {} }: SidebarProps) {
         </div>
 
         {/* Divider */}
-        <div className="my-2 mx-1 h-px bg-[#1E1E25]/60" />
+        <div className="my-2 mx-1 h-px bg-[#E4E0F5]" />
 
         {/* Labels */}
         <Link
@@ -149,25 +149,25 @@ export function Sidebar({ savedViews = [], taskCounts = {} }: SidebarProps) {
           className={cn(
             "relative flex items-center gap-2.5 px-2.5 py-[7px] rounded-lg text-[13px] transition-all duration-150 group",
             pathname === "/tags"
-              ? "bg-[#7C5CFF]/12 text-[#F4F4F5]"
-              : "text-[#71717A] hover:bg-white/[0.04] hover:text-[#D4D4D8]"
+              ? "bg-white text-[#1E1B4B] shadow-sm"
+              : "text-[#6B7280] hover:bg-white/60 hover:text-[#1E1B4B]"
           )}
         >
           {pathname === "/tags" && (
-            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 bg-[#7C5CFF] rounded-full shadow-[0_0_6px_rgba(124,92,255,0.6)]" />
+            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 bg-[#7C3AED] rounded-full" />
           )}
-          <Tag className={cn("h-[15px] w-[15px] shrink-0 transition-colors", pathname === "/tags" ? "text-[#7C5CFF]" : "text-[#3A3A45] group-hover:text-[#71717A]")} />
+          <Tag className={cn("h-[15px] w-[15px] shrink-0 transition-colors", pathname === "/tags" ? "text-[#7C3AED]" : "text-[#9CA3AF] group-hover:text-[#6B7280]")} />
           <span className="font-medium">Labels</span>
         </Link>
       </nav>
 
       {/* Bottom */}
-      <div className="px-2 py-2 border-t border-[#1E1E25]/60">
+      <div className="px-2 py-2 border-t border-[#E4E0F5]">
         <Link
           href="/settings"
-          className="flex items-center gap-2.5 px-2.5 py-[7px] rounded-lg text-[13px] text-[#71717A] hover:bg-white/[0.04] hover:text-[#D4D4D8] transition-all duration-150 group"
+          className="flex items-center gap-2.5 px-2.5 py-[7px] rounded-lg text-[13px] text-[#6B7280] hover:bg-white/60 hover:text-[#1E1B4B] transition-all duration-150 group"
         >
-          <Settings className="h-[15px] w-[15px] text-[#3A3A45] group-hover:text-[#71717A] transition-colors" />
+          <Settings className="h-[15px] w-[15px] text-[#9CA3AF] group-hover:text-[#6B7280] transition-colors" />
           <span className="font-medium">Settings</span>
         </Link>
       </div>

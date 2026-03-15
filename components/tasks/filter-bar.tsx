@@ -28,10 +28,10 @@ const STATUS_OPTIONS = [
 
 const PRIORITY_OPTIONS = [
   { value: "ALL",    label: "All priorities" },
-  { value: "URGENT", label: "Urgent",  color: "#F43F5E" },
-  { value: "HIGH",   label: "High",    color: "#F59E0B" },
-  { value: "MEDIUM", label: "Medium",  color: "#7C5CFF" },
-  { value: "LOW",    label: "Low",     color: "#52525B" },
+  { value: "URGENT", label: "Urgent",  color: "#DC2626" },
+  { value: "HIGH",   label: "High",    color: "#D97706" },
+  { value: "MEDIUM", label: "Medium",  color: "#7C3AED" },
+  { value: "LOW",    label: "Low",     color: "#9CA3AF" },
 ];
 
 const SORT_OPTIONS = [
@@ -69,8 +69,8 @@ function FilterPill({
             "inline-flex items-center gap-1.5 h-[26px] px-2.5 rounded-full text-[11px] font-medium",
             "border transition-all duration-150 outline-none select-none",
             active
-              ? "bg-[#7C5CFF]/12 border-[#7C5CFF]/35 text-[#7C5CFF]"
-              : "bg-transparent border-[#1E1E25] text-[#6B6B7A] hover:border-[#2A2A35] hover:text-[#A1A1AA]"
+              ? "bg-[#EDE9FE] border-[#C4B5FD] text-[#7C3AED]"
+              : "bg-white border-[#E4E0F5] text-[#6B7280] hover:border-[#C9C2EC] hover:text-[#1E1B4B]"
           )}
         >
           <span className={cn("opacity-60", active && "opacity-100")}>{icon}</span>
@@ -196,14 +196,14 @@ export function FilterBar({ filters, sort, onFiltersChange, onSortChange, availa
       )}
 
       {/* Separator */}
-      <div className="w-px h-4 bg-[#1E1E25] mx-0.5" />
+      <div className="w-px h-4 bg-[#E4E0F5] mx-0.5" />
 
       {/* Sort */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className={cn(
             "inline-flex items-center gap-1.5 h-[26px] px-2.5 rounded-full text-[11px] font-medium",
-            "border border-[#1E1E25] text-[#6B6B7A] hover:border-[#2A2A35] hover:text-[#A1A1AA]",
+            "border border-[#E4E0F5] bg-white text-[#6B7280] hover:border-[#C9C2EC] hover:text-[#1E1B4B]",
             "transition-all duration-150 outline-none"
           )}>
             <SortAsc className="h-3 w-3 opacity-60" />
@@ -231,7 +231,7 @@ export function FilterBar({ filters, sort, onFiltersChange, onSortChange, availa
           onClick={clearFilters}
           className={cn(
             "inline-flex items-center gap-1 h-[26px] px-2 rounded-full text-[11px] font-medium",
-            "text-[#52525B] hover:text-[#F43F5E] transition-colors duration-150"
+            "text-[#9CA3AF] hover:text-[#DC2626] transition-colors duration-150"
           )}
         >
           <X className="h-3 w-3" />

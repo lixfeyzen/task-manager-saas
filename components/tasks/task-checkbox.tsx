@@ -12,10 +12,10 @@ interface TaskCheckboxProps {
 }
 
 const PRIORITY_COLOR: Record<string, string> = {
-  URGENT: "#F43F5E",
-  HIGH:   "#F59E0B",
-  MEDIUM: "#7C5CFF",
-  LOW:    "#52525B",
+  URGENT: "#DC2626",
+  HIGH:   "#D97706",
+  MEDIUM: "#7C3AED",
+  LOW:    "#9CA3AF",
 };
 
 export function TaskCheckbox({ checked, onChange, priority, disabled }: TaskCheckboxProps) {
@@ -33,10 +33,10 @@ export function TaskCheckbox({ checked, onChange, priority, disabled }: TaskChec
         "relative flex items-center justify-center shrink-0",
         "w-[18px] h-[18px] rounded-full",
         "transition-all duration-200 ease-out",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7C5CFF]/50 focus-visible:ring-offset-1 focus-visible:ring-offset-[#0B0B0F]",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 focus-visible:ring-offset-1 focus-visible:ring-offset-white",
         "disabled:opacity-40 disabled:cursor-not-allowed",
         checked
-          ? "bg-[#22C55E] border-2 border-transparent"
+          ? "bg-[#059669] border-2 border-transparent"
           : "bg-transparent border-2"
       )}
       style={{
@@ -44,9 +44,9 @@ export function TaskCheckbox({ checked, onChange, priority, disabled }: TaskChec
           ? "transparent"
           : isHovered
             ? accentColor
-            : "rgba(60,60,75,0.9)",
+            : "rgba(196,181,253,0.8)",
         boxShadow: checked
-          ? "0 0 0 3px rgba(34,197,94,0.15), 0 0 10px rgba(34,197,94,0.2)"
+          ? "0 0 0 3px rgba(5,150,105,0.12), 0 0 8px rgba(5,150,105,0.15)"
           : isHovered
             ? `0 0 0 3px ${accentColor}18, 0 0 8px ${accentColor}25`
             : "none",

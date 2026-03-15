@@ -23,25 +23,25 @@ export function UserMenu({ user }: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 rounded-lg p-0.5 hover:bg-white/[0.06] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7C5CFF]/60">
-          <Avatar className="h-7 w-7 ring-1 ring-[#ffffff10]">
+        <button className="flex items-center gap-2 rounded-lg p-0.5 hover:bg-[#F0EDFF] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40">
+          <Avatar className="h-7 w-7 ring-1 ring-[#E4E0F5]">
             <AvatarImage src={user?.image ?? undefined} />
-            <AvatarFallback className="text-[11px]">{initials}</AvatarFallback>
+            <AvatarFallback className="text-[11px] bg-[#EDE9FE] text-[#7C3AED]">{initials}</AvatarFallback>
           </Avatar>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>
           <div className="flex items-center gap-2.5 py-0.5">
-            <Avatar className="h-8 w-8 shrink-0 ring-1 ring-[#ffffff10]">
+            <Avatar className="h-8 w-8 shrink-0 ring-1 ring-[#E4E0F5]">
               <AvatarImage src={user?.image ?? undefined} />
-              <AvatarFallback className="text-[11px]">{initials}</AvatarFallback>
+              <AvatarFallback className="text-[11px] bg-[#EDE9FE] text-[#7C3AED]">{initials}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col gap-px min-w-0">
-              <span className="text-[#F4F4F5] font-semibold text-[13px] truncate">
+              <span className="text-[#1E1B4B] font-semibold text-[13px] truncate">
                 {user?.name ?? "User"}
               </span>
-              <span className="text-[#52525B] text-[10px] font-normal truncate">{user?.email}</span>
+              <span className="text-[#9CA3AF] text-[10px] font-normal truncate">{user?.email}</span>
             </div>
           </div>
         </DropdownMenuLabel>

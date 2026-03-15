@@ -68,8 +68,8 @@ export default function TagsPage() {
     <div className="max-w-2xl mx-auto px-6 py-8">
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-[#F4F4F5] font-semibold text-xl">Labels</h1>
-          <p className="text-[#52525B] text-sm mt-1">Organize tasks with color-coded labels</p>
+          <h1 className="text-[#1E1B4B] font-semibold text-xl">Labels</h1>
+          <p className="text-[#9CA3AF] text-sm mt-1">Organize tasks with color-coded labels</p>
         </div>
         <Button variant="primary" size="sm" onClick={() => setShowNew(true)}>
           <Plus className="h-3.5 w-3.5" />
@@ -80,7 +80,7 @@ export default function TagsPage() {
       <div className="space-y-2">
         {/* Create new */}
         {showNew && (
-          <div className="flex items-center gap-3 p-4 rounded-xl bg-[#111116] border border-[#7C5CFF]/30 animate-fade-in">
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-[#F8F7FF] border border-[#C9C2EC] animate-fade-in">
             <div className="flex gap-1.5 flex-wrap">
               {TAG_COLORS.map((c) => (
                 <button
@@ -88,7 +88,7 @@ export default function TagsPage() {
                   onClick={() => setNewColor(c)}
                   className={cn(
                     "w-5 h-5 rounded-full transition-all duration-150",
-                    newColor === c && "ring-2 ring-white/30 ring-offset-1 ring-offset-[#111116] scale-110"
+                    newColor === c && "ring-2 ring-[#7C3AED]/40 ring-offset-1 ring-offset-white scale-110"
                   )}
                   style={{ backgroundColor: c }}
                 />
@@ -100,19 +100,19 @@ export default function TagsPage() {
               onChange={(e) => setNewName(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") handleCreate(); if (e.key === "Escape") { setShowNew(false); setNewName(""); } }}
               placeholder="Label name…"
-              className="flex-1 bg-transparent text-sm text-[#F4F4F5] placeholder:text-[#52525B] outline-none"
+              className="flex-1 bg-transparent text-sm text-[#1E1B4B] placeholder:text-[#9CA3AF] outline-none"
             />
             <div className="flex gap-1">
               <button
                 onClick={handleCreate}
                 disabled={!newName.trim()}
-                className="w-7 h-7 rounded-lg bg-[#7C5CFF] text-white flex items-center justify-center disabled:opacity-40 hover:bg-[#6D4DF5] transition-colors"
+                className="w-7 h-7 rounded-lg bg-[#7C3AED] text-white flex items-center justify-center disabled:opacity-40 hover:bg-[#6D28D9] transition-colors"
               >
                 <Check className="h-3.5 w-3.5" />
               </button>
               <button
                 onClick={() => { setShowNew(false); setNewName(""); }}
-                className="w-7 h-7 rounded-lg text-[#52525B] hover:text-[#A1A1AA] hover:bg-white/5 flex items-center justify-center transition-colors"
+                className="w-7 h-7 rounded-lg text-[#9CA3AF] hover:text-[#6B7280] hover:bg-[#F0EDFF] flex items-center justify-center transition-colors"
               >
                 <X className="h-3.5 w-3.5" />
               </button>
@@ -146,10 +146,10 @@ export default function TagsPage() {
               key={tag.id}
               className={cn(
                 "group relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-150",
-                "bg-[#111116] border",
+                "bg-white border",
                 isEditing
-                  ? "border-[#7C5CFF]/25"
-                  : "border-[#1E1E25] hover:border-[#2A2A35] hover:bg-[#16161D]"
+                  ? "border-[#C9C2EC]"
+                  : "border-[#E4E0F5] hover:border-[#C9C2EC] hover:bg-[#F8F7FF]"
               )}
             >
               {!isEditing && (
@@ -167,7 +167,7 @@ export default function TagsPage() {
                         onClick={() => setEditColor(c)}
                         className={cn(
                           "w-5 h-5 rounded-full transition-all duration-150",
-                          editColor === c && "ring-2 ring-white/30 ring-offset-1 ring-offset-[#111116] scale-110"
+                          editColor === c && "ring-2 ring-[#7C3AED]/40 ring-offset-1 ring-offset-white scale-110"
                         )}
                         style={{ backgroundColor: c }}
                       />
@@ -178,18 +178,18 @@ export default function TagsPage() {
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
                     onKeyDown={(e) => { if (e.key === "Enter") handleUpdate(tag.id); if (e.key === "Escape") setEditingId(null); }}
-                    className="flex-1 bg-transparent text-sm text-[#F4F4F5] outline-none"
+                    className="flex-1 bg-transparent text-sm text-[#1E1B4B] outline-none"
                   />
                   <div className="flex gap-1">
                     <button
                       onClick={() => handleUpdate(tag.id)}
-                      className="w-7 h-7 rounded-lg bg-[#7C5CFF] text-white flex items-center justify-center hover:bg-[#6D4DF5] transition-colors"
+                      className="w-7 h-7 rounded-lg bg-[#7C3AED] text-white flex items-center justify-center hover:bg-[#6D28D9] transition-colors"
                     >
                       <Check className="h-3.5 w-3.5" />
                     </button>
                     <button
                       onClick={() => setEditingId(null)}
-                      className="w-7 h-7 rounded-lg text-[#52525B] hover:text-[#A1A1AA] hover:bg-white/5 flex items-center justify-center"
+                      className="w-7 h-7 rounded-lg text-[#9CA3AF] hover:text-[#6B7280] hover:bg-[#F0EDFF] flex items-center justify-center"
                     >
                       <X className="h-3.5 w-3.5" />
                     </button>
@@ -204,19 +204,19 @@ export default function TagsPage() {
                       boxShadow: `0 0 6px rgba(${r},${g},${b},0.4)`,
                     }}
                   />
-                  <span className="flex-1 text-[13px] font-medium text-[#D4D4D8] group-hover:text-[#F4F4F5] transition-colors duration-150">
+                  <span className="flex-1 text-[13px] font-medium text-[#374151] group-hover:text-[#1E1B4B] transition-colors duration-150">
                     {tag.name}
                   </span>
                   <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-150 translate-x-1 group-hover:translate-x-0">
                     <button
                       onClick={() => startEdit(tag)}
-                      className="w-7 h-7 rounded-lg text-[#52525B] hover:text-[#A1A1AA] hover:bg-white/[0.06] flex items-center justify-center transition-all"
+                      className="w-7 h-7 rounded-lg text-[#9CA3AF] hover:text-[#6B7280] hover:bg-[#F0EDFF] flex items-center justify-center transition-all"
                     >
                       <Edit2 className="h-3.5 w-3.5" />
                     </button>
                     <button
                       onClick={() => handleDelete(tag.id)}
-                      className="w-7 h-7 rounded-lg text-[#52525B] hover:text-[#F43F5E] hover:bg-[#F43F5E]/10 flex items-center justify-center transition-all"
+                      className="w-7 h-7 rounded-lg text-[#9CA3AF] hover:text-[#DC2626] hover:bg-[#FEE2E2] flex items-center justify-center transition-all"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>

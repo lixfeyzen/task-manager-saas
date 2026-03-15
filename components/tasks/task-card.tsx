@@ -23,10 +23,10 @@ interface TaskCardProps {
 }
 
 const PRIORITY_STRIPE: Record<string, string> = {
-  URGENT: "bg-[#F43F5E]",
-  HIGH:   "bg-[#F59E0B]",
-  MEDIUM: "bg-[#7C5CFF]",
-  LOW:    "bg-[#52525B]",
+  URGENT: "bg-[#DC2626]",
+  HIGH:   "bg-[#D97706]",
+  MEDIUM: "bg-[#7C3AED]",
+  LOW:    "bg-[#9CA3AF]",
 };
 
 export function TaskCard({
@@ -49,12 +49,9 @@ export function TaskCard({
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
         "group relative flex items-start gap-3 pl-4 pr-4 py-3",
-        "border-b border-[#1E1E25]/80 transition-all duration-150 cursor-pointer",
-        // Hover: subtle surface lift
-        "hover:bg-[#16161D]",
-        // Selected state
-        selected && "bg-[#7C5CFF]/[0.06] border-b-[#7C5CFF]/15",
-        // Done: muted
+        "border-b border-[#E4E0F5] transition-all duration-150 cursor-pointer",
+        "hover:bg-[#F8F7FF]",
+        selected && "bg-[#F0EDFF] border-b-[#C9C2EC]",
         isDone && "opacity-55"
       )}
       onClick={() => onEdit(task)}
@@ -64,7 +61,7 @@ export function TaskCard({
         <span
           className={cn(
             "absolute left-0 top-[20%] bottom-[20%] w-[2px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200",
-            PRIORITY_STRIPE[task.priority] ?? "bg-[#52525B]"
+            PRIORITY_STRIPE[task.priority] ?? "bg-[#9CA3AF]"
           )}
         />
       )}
@@ -78,7 +75,7 @@ export function TaskCard({
             onChange={(e) => { e.stopPropagation(); onSelect(task.id, e.target.checked); }}
             onClick={(e) => e.stopPropagation()}
             className={cn(
-              "w-3.5 h-3.5 rounded-sm border border-[#2A2A35] bg-transparent accent-[#7C5CFF] cursor-pointer",
+              "w-3.5 h-3.5 rounded-sm border border-[#C9C2EC] bg-white accent-[#7C3AED] cursor-pointer",
               "transition-all duration-150",
               "opacity-0 group-hover:opacity-60",
               selected && "opacity-100"
@@ -101,14 +98,14 @@ export function TaskCard({
         <p className={cn(
           "text-sm font-medium leading-snug break-words",
           isDone
-            ? "task-done-text text-[#3A3A45]"
-            : "text-[#F4F4F5] group-hover:text-white transition-colors duration-100"
+            ? "task-done-text text-[#9CA3AF]"
+            : "text-[#1E1B4B] group-hover:text-[#1E1B4B] transition-colors duration-100"
         )}>
           {task.title}
         </p>
 
         {!compact && task.description && (
-          <p className="text-[11.5px] text-[#52525B] mt-0.5 line-clamp-1 leading-relaxed">
+          <p className="text-[11.5px] text-[#9CA3AF] mt-0.5 line-clamp-1 leading-relaxed">
             {task.description}
           </p>
         )}
@@ -122,8 +119,8 @@ export function TaskCard({
               <span className={cn(
                 "inline-flex items-center gap-1 text-[11px] font-medium tracking-tight",
                 overdue
-                  ? "text-[#F43F5E]"
-                  : "text-[#52525B] group-hover:text-[#6B6B7A] transition-colors"
+                  ? "text-[#DC2626]"
+                  : "text-[#9CA3AF] group-hover:text-[#6B7280] transition-colors"
               )}>
                 <Calendar className="h-3 w-3" />
                 {formatDate(task.dueDate)}
@@ -131,14 +128,14 @@ export function TaskCard({
             )}
 
             {task.isRecurring && (
-              <Repeat className="h-3 w-3 text-[#52525B]" />
+              <Repeat className="h-3 w-3 text-[#9CA3AF]" />
             )}
 
             {tags.slice(0, 3).map((tag) => (
               <TagBadge key={tag.id} tag={tag} size="xs" />
             ))}
             {tags.length > 3 && (
-              <span className="text-[10px] text-[#52525B]">+{tags.length - 3}</span>
+              <span className="text-[10px] text-[#9CA3AF]">+{tags.length - 3}</span>
             )}
           </div>
         )}
@@ -156,7 +153,7 @@ export function TaskCard({
           <DropdownMenuTrigger asChild>
             <button className={cn(
               "flex items-center justify-center w-6 h-6 rounded-md",
-              "text-[#52525B] hover:text-[#A1A1AA] hover:bg-white/[0.06]",
+              "text-[#9CA3AF] hover:text-[#6B7280] hover:bg-[#F0EDFF]",
               "transition-all duration-100"
             )}>
               <MoreHorizontal className="h-3.5 w-3.5" />

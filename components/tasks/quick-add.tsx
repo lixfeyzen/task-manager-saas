@@ -36,8 +36,8 @@ export function QuickAdd({ onAdd, placeholder = "Add a task…", className }: Qu
       onSubmit={handleSubmit}
       className={cn(
         "group flex items-center gap-3 px-4 py-2.5 transition-all duration-150",
-        "border-b border-[#1E1E25]/60",
-        isActive ? "bg-[#7C5CFF]/[0.04]" : "hover:bg-white/[0.018]",
+        "border-b border-[#E4E0F5]",
+        isActive ? "bg-[#F0EDFF]" : "hover:bg-[#F8F7FF]",
         className
       )}
     >
@@ -48,8 +48,8 @@ export function QuickAdd({ onAdd, placeholder = "Add a task…", className }: Qu
           "flex items-center justify-center w-[18px] h-[18px] rounded-full shrink-0",
           "border-2 transition-all duration-200",
           hasValue
-            ? "border-[#7C5CFF] text-[#7C5CFF] hover:bg-[#7C5CFF]/15 hover:scale-110"
-            : "border-dashed border-[#2A2A35] text-[#3A3A45]",
+            ? "border-[#7C3AED] text-[#7C3AED] hover:bg-[#EDE9FE] hover:scale-110"
+            : "border-dashed border-[#C4B5FD] text-[#C4B5FD]",
           isAdding && "opacity-50"
         )}
       >
@@ -65,15 +65,15 @@ export function QuickAdd({ onAdd, placeholder = "Add a task…", className }: Qu
         placeholder={placeholder}
         className={cn(
           "flex-1 bg-transparent text-[13px] outline-none",
-          "text-[#F4F4F5] transition-colors duration-150",
+          "text-[#1E1B4B] transition-colors duration-150",
           isActive
-            ? "placeholder:text-[#3A3A45]"
-            : "placeholder:text-[#2A2A35] group-hover:placeholder:text-[#2E2E3A]"
+            ? "placeholder:text-[#C4B5FD]"
+            : "placeholder:text-[#D8B4FE] group-hover:placeholder:text-[#C4B5FD]"
         )}
       />
 
       {hasValue && (
-        <span className="text-[10px] text-[#3A3A45] font-mono animate-fade-in">↵</span>
+        <span className="text-[10px] text-[#9CA3AF] font-mono animate-fade-in">↵</span>
       )}
     </form>
   );

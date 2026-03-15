@@ -13,21 +13,19 @@ export function EmptyState({ icon, title, description, action, className }: Empt
   return (
     <div className={cn("flex flex-col items-center justify-center py-24 gap-4", className)}>
       <div className="relative">
-        {/* Ambient glow behind icon */}
-        <div className="absolute inset-0 rounded-2xl bg-[#7C5CFF]/10 blur-xl scale-[1.6] pointer-events-none" />
+        <div className="absolute inset-0 rounded-2xl bg-[#7C3AED]/10 blur-xl scale-[1.6] pointer-events-none" />
         <div className={cn(
           "relative w-14 h-14 rounded-2xl flex items-center justify-center",
-          "bg-[#111116] border border-[#1E1E25]",
-          "shadow-[0_0_0_1px_rgba(255,255,255,0.03),inset_0_1px_0_rgba(255,255,255,0.04)]",
-          "text-[#2A2A35]"
+          "bg-[#F0EDFF] border border-[#E4E0F5]",
+          "text-[#C4B5FD]"
         )}>
           {icon}
         </div>
       </div>
       <div className="text-center space-y-1 max-w-[220px]">
-        <p className="text-[#71717A] font-semibold text-[13px]">{title}</p>
+        <p className="text-[#6B7280] font-semibold text-[13px]">{title}</p>
         {description && (
-          <p className="text-[#3A3A45] text-[11px] leading-relaxed">{description}</p>
+          <p className="text-[#9CA3AF] text-[11px] leading-relaxed">{description}</p>
         )}
       </div>
       {action}
