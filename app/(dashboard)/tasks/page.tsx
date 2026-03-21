@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Plus, LayoutList, Grid3x3, Search } from "lucide-react";
+import { Plus, LayoutList, Grid3x3, Search, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TaskList } from "@/components/tasks/task-list";
@@ -118,6 +118,22 @@ export default function TasksPage() {
     await Promise.all(ids.map((id) => fetch(`/api/tasks/${id}`, { method: "DELETE" })));
   };
 
+  const handleExport = () => {
+    const params = new URLSearchParams();
+    if (filters.status && filters.status !== "ALL") params.set("status", filters.status);
+    if (filters.priority && filters.priority !== "ALL") params.set("priority", filters.priority);
+    if (filters.tagIds?.length) params.set("tagIds", filters.tagIds.join(","));
+    if (filters.dueDate && filters.dueDate !== "all") params.set("dueDate", filters.dueDate);
+    if (search) params.set("search", search);
+    params.set("sortBy", sort.by);
+    params.set("sortOrder", sort.order);
+    // Trigger download via anchor
+    const a = document.createElement("a");
+    a.href = `/api/tasks/export?${params}`;
+    a.download = "";
+    a.click();
+  };
+
   const handleSaveView = async (name: string) => {
     const res = await fetch("/api/views", {
       method: "POST",
@@ -157,6 +173,16 @@ export default function TasksPage() {
             )}
           </div>
           <div className="flex items-center gap-1.5">
+            {/* Export button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleExport}
+              title="Export tasks as CSV"
+              className="text-[#52525B] hover:text-[#A1A1AA] px-2"
+            >
+              <Download className="h-3.5 w-3.5" />
+            </Button>
             {/* View mode toggle */}
             <div className="flex items-center bg-[#0F0F14] border border-[#1E1E25] rounded-lg p-0.5 gap-px">
               <button

@@ -62,6 +62,9 @@ model Task {
   completedAt   DateTime?
   isRecurring   Boolean       @default(false)
   recurringRule String?
+  // Reminder fields: when to fire the reminder and whether it has been sent
+  reminderAt    DateTime?
+  reminderSent  Boolean       @default(false)
   userId        String
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   tags          TagsOnTasks[]

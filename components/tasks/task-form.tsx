@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Calendar, Repeat, Tag, X } from "lucide-react";
+import { Bell, Repeat, Tag, X } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,7 @@ const schema = z.object({
   status: z.enum(["TODO", "IN_PROGRESS", "DONE"]),
   priority: z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]),
   dueDate: z.string().optional(),
+  reminderAt: z.string().optional(),
   isRecurring: z.boolean(),
   recurringRule: z.enum(["daily", "weekly", "monthly", "weekdays"]).optional(),
 });
@@ -87,6 +88,9 @@ export function TaskForm({ open, onClose, onSubmit, initialTask, allTags, defaul
         status: initialTask.status,
         priority: initialTask.priority,
         dueDate: initialTask.dueDate ? format(new Date(initialTask.dueDate), "yyyy-MM-dd") : "",
+        reminderAt: initialTask.reminderAt
+          ? format(new Date(initialTask.reminderAt), "yyyy-MM-dd'T'HH:mm")
+          : "",
         isRecurring: initialTask.isRecurring,
         recurringRule: (initialTask.recurringRule as FormData["recurringRule"]) ?? undefined,
       });
@@ -270,6 +274,22 @@ export function TaskForm({ open, onClose, onSubmit, initialTask, allTags, defaul
                 "transition-colors duration-150 cursor-pointer [color-scheme:dark]"
               )}
             />
+
+            {/* Reminder */}
+            <div className="relative inline-flex items-center gap-1">
+              <Bell className="h-3 w-3 text-[#52525B] pointer-events-none absolute left-2" />
+              <input
+                type="datetime-local"
+                {...register("reminderAt")}
+                title="Set reminder"
+                className={cn(
+                  "h-7 pl-6 pr-2 text-[11px] font-medium rounded-lg border border-[#1E1E25] bg-transparent",
+                  "text-[#A1A1AA] hover:border-[#2A2A35] focus:outline-none focus:border-[#7C5CFF]/40",
+                  "transition-colors duration-150 cursor-pointer [color-scheme:dark]",
+                  "w-[160px]"
+                )}
+              />
+            </div>
 
             {/* Recurring toggle */}
             <button
